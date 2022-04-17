@@ -2,7 +2,8 @@ const canvas = document.getElementById('responsive-canvas');
 const ctx = canvas.getContext('2d');
 
 const downloadButton = document.getElementById('download-image');
-let isEnabled = false;
+let fileLoaded = false;
+
 const fileselected = document.getElementById('file-selected');
 
 function canvasToPNG(){
@@ -20,18 +21,23 @@ function downloadImage(){
   document.body.removeChild(anchor);
 }
 
+function setValueOnRange(HTMLRangeElement, initialValue){
+  HTMLRangeElement.value = initialValue;
+  
+  const {value, min, max} = HTMLRangeElement;
+  
+  HTMLRangeElement.style.backgroundSize =  (value - min) * 100 / (max - min) + '% 100%';  
+}
+
 downloadButton.addEventListener('click', downloadImage)
 
 const rangeScale = document.getElementById('range-scale');
-rangeScale.value = 100;
-
 const xAxis = document.getElementById('x-axis');
-xAxis.value = 0;
-xAxis.style.backgroundSize =  (xAxis.value - xAxis.min) * 100 / (xAxis.max - xAxis.min) + '% 100%';
-
 const yAxis = document.getElementById('y-axis');
-yAxis.value = 0;
-yAxis.style.backgroundSize =  (yAxis.value - yAxis.min) * 100 / (yAxis.max - yAxis.min) + '% 100%';
+
+setValueOnRange(rangeScale, 100);
+setValueOnRange(xAxis, 0);
+setValueOnRange(yAxis, 0);
 
 rangeScale.addEventListener('input',function(){
   const {value, min, max} = this;
@@ -82,8 +88,6 @@ function drawCustomBillete(image){
   const imageXPosition = (canvas.width - scaledWidth)/2 + xOffset;
   const imageYPosition = (canvas.height - scaledHeight)/2 + yOffset;
 
-  console.log(imageXPosition);
-
   clearCanvas();
 
   drawImageOnCanvas(
@@ -104,9 +108,9 @@ let photo = new Image();
 inputPhoto.addEventListener('change', (e)=>{
   fr.readAsDataURL(e.currentTarget.files[0]);
   fileselected.innerText = e.currentTarget.files[0].name;
-  if(!isEnabled){
+  if(!fileLoaded){
     downloadButton.removeAttribute('disabled');
-    isEnabled = !isEnabled;
+    fileLoaded = !fileLoaded;
   }
 })
 
@@ -114,6 +118,6 @@ fr.addEventListener('load', (e)=>{
   photo.src = e.target.result;
 })
 
-photo.addEventListener('load', function({currentTarget}){
+photo.addEventListener('load', ({currentTarget})=>{
   drawCustomBillete(currentTarget);
 });
