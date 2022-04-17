@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>¡Tu billete creativo!</title>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h1>Billete creativo</h1>
+        <p>Felicidades por llegar hasta este punto.</p>
+        <p>Crea tu propio billete y compartelo en redes sociales</p>
+      </header>
+
+      <canvas width="1200px" height="630px" id="responsive-canvas"></canvas>
+  
+      <div class="controls">
+        <fieldset>
+          <legend>Perzonalizar</legend>
+          <div class="customize">
+  
+            <div class="customize__input">
+              <label for="range-scale">Escalar foto</label>
+              <input type="range" name="range-scale" id="range-scale" min="50" max="100">
+            </div>
+            
+            <div class="customize__input">
+              <label for="x-axis">Desplazar horizontalmente</label>
+              <input type="range" name="x-axis" id="x-axis" min="-100" max="100">
+            </div>
+            
+            <div class="customize__input">
+              <label for="y-axis">Desplazar verticalmente</label>
+              <input type="range" name="y-axis" id="y-axis" min="-100" max="100">
+            </div>
+          </div>
+        </fieldset>
+        <div class="file">
+          <label for="photo" class="custom-file">
+            <span class="custom-file__action button">
+              Cargar foto
+            </span>
+            <span id="file-selected" class="custom-file__selected">No hay foto cargada aún...</span>
+          </label>
+          <input type="file" name="photo" accept="image/*" id="photo">
+          <button class="button full" id="download-image" disabled>Descargar billete</button>
+        </div>
+      </div>
+      
+      <footer>Creado por <a href="https://twitter.com/_ferdinandalexa">@_ferdinandalexa</a> para la Comunidad de Platzi 💚🍍🍍</footer>
+    </div>
+    <script src="/index.js"></script>
+  </body>
+</html>
